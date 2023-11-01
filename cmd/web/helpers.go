@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"runtime/debug"
 	"time"
+
+	"munhwas1140.net/snippetbox/pkg/models"
 )
 
 // the serverError helper writes an error message and stack trace to the errorLog
@@ -61,6 +63,10 @@ func (app *application) render(w http.ResponseWriter, r *http.Request,
 	buf.WriteTo(w)
 }
 
-func (app *application) authenticationUser(r *http.Request) int {
-	return app.session.GetInt(r, "userID")
+func (app *application) authenticationUser(r *http.Request) *models.User {
+	user, ok := r.Context().Value(contextKeyUser).(*models.User)
+	if !ok {
+		return nil
+	}
+	return user
 }

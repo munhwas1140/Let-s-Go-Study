@@ -49,11 +49,6 @@ func (app *application) createSnippetForm(w http.ResponseWriter, r *http.Request
 }
 
 func (app *application) createSnippet(w http.ResponseWriter, r *http.Request) {
-
-	if app.authenticationUser(r) == 0 {
-		http.Redirect(w, r, "/user/login", 302)
-		return
-	}
 	err := r.ParseForm()
 	if err != nil {
 		app.clientError(w, http.StatusBadRequest)
